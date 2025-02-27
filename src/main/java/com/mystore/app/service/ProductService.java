@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -72,17 +73,42 @@ public class ProductService {
         }
         return null;
     }
-
+    
     // TODO: Method to search products by name
 
+	public List<Product> searchProductByName(String name) {
+		// TODO Auto-generated method stub
+		 return products.stream()
+	                .filter(product -> product.getName().toLowerCase().contains(name.toLowerCase()))
+	                .collect(Collectors.toList());
+	}
 
     // TODO: Method to filter products by category
 
+	public List<Product> filterBycategory(String category) {
+		// TODO Auto-generated method stub
+		return products.stream().
+				filter(product-> product.getCategory().toLowerCase().contains(category.toLowerCase()))
+				.collect(Collectors.toList());		
+	}
 
     // TODO: Method to filter products by price range
 
-
+	public List<Product> filterByPrice(Double minPrice, Double maxPrice) {
+		// TODO Auto-generated method stub
+		return products.stream()
+				.filter(product -> product.getPrice() >=minPrice && product.getPrice()<= maxPrice)
+				.collect(Collectors.toList());
+		
+		
+	}
     // TODO: Method to filter products by stock quantity range
+
+	public List<Product> filterByStock(int minStock, int maxStock) {
+		return products.stream()
+				.filter(product -> product.getStockQuantity()>=minStock && product.getStockQuantity()<=maxStock)
+				.collect(Collectors.toList());
+	}
 
     
 }
